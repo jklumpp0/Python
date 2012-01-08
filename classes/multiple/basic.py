@@ -6,7 +6,6 @@ class Multiple(object):
     - duh
     """
     def __init__(self):
-        super().__init__()
         print("Multiple was called!")
 
 
@@ -19,7 +18,8 @@ class DemoClass(LifeCyclePrinter, Multiple):
         """
         Initialize!
         """
-        super(DemoClass, self).__init__(name)
+        LifeCyclePrinter.__init__(self, name)
+        Multiple.__init__(self)
         self.read_bytes = 0
 
     def close(self):

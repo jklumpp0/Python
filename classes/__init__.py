@@ -1,2 +1,2 @@
-from classes.basic import *
-__all__ = ['LifeCyclePrinter', 'Multiple', 'DemoClass']
+from classes.lifecycle import *
+__all__ = ['LifeCyclePrinter']

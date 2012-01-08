@@ -4,7 +4,6 @@ class LifeCyclePrinter(object):
     """
 
     def __init__(self, name):
-        super().__init__()
         self.name = name
         print("{} is initializing...".format(self.name))
 
