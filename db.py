@@ -12,23 +12,25 @@ class DBImage(Base):
     path = Column(String)
     width = Column(Integer)
     height = Column(Integer)
+    model = Column(String)
     ctime = Column(DateTime)
     exif_time = Column(DateTime)
 
-    def __init__(self, path, name, width, height, ctime, exif_time):
+    def __init__(self, path, name, camera_model, width, height, ctime, exif_time):
         self.path = path
         self.name = name
         self.width = width
         self.height = height
         self.ctime = ctime
         self.exif_time = exif_time
+        self.model = camera_model
 
     def __repr__(self):
-        return "{}, width: {}, height: {}, ctime: {}, exif_time: {}".format(self.name, self.width, self.height, self.ctime, self.exif_time)
+        return "{}, model: {}, width: {}, height: {}, ctime: {}, exif_time: {}".format(self.name, self.model, self.width, self.height, self.ctime, self.exif_time)
  
 class Database:
     def __init__(self):
-        self.engine = create_engine("sqlite:///tmp.db", echo=True)
+        self.engine = create_engine("sqlite:///tmp.db", echo=False)
         Base.metadata.create_all(self.engine)
         self.Session = sessionmaker(bind=self.engine)
 

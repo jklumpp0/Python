@@ -5,8 +5,12 @@ from PIL import Image
 from db import DBImage, Database
 import datetime
 
-def ctime_to_datetime(ctime):
-    return datetime.datetime.strptime(ctime, "%a %b %d %H:%M:%S %Y")
+NO_MODEL = "NO_CAMERA"
+def get_camera_model(img):
+    try:
+        return img._getexif()[272]
+    except:
+        return NO_MODEL
 
 def get_exif_time(img):
     try:
@@ -18,10 +22,10 @@ def get_image(file):
     try:
         img = Image.open(file)
         width, height = img.size
-        #print(img._getexif())
         ctime = datetime.datetime.fromtimestamp(os.path.getctime(file))
         exif_time = datetime.datetime.strptime(get_exif_time(img), "%Y:%m:%d %H:%M:%S")
-        return DBImage(file, os.path.basename(file), width, height, ctime, exif_time)
+        model = get_camera_model(img)
+        return DBImage(file, os.path.basename(file), model, width, height, ctime, exif_time)
     except:
         print(sys.exc_info())
         return None
