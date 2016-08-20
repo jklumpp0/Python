@@ -2,6 +2,7 @@ import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
+import os
 
 Base = declarative_base()
 class DBImage(Base):
@@ -15,6 +16,7 @@ class DBImage(Base):
     model = Column(String)
     ctime = Column(DateTime)
     exif_time = Column(DateTime)
+    size = Column(Integer)
 
     def __init__(self, path, name, camera_model, width, height, ctime, exif_time):
         self.path = path
@@ -24,9 +26,10 @@ class DBImage(Base):
         self.ctime = ctime
         self.exif_time = exif_time
         self.model = camera_model
+        self.size = os.stat(self.path).st_size
 
     def __repr__(self):
-        return "{}, model: {}, width: {}, height: {}, ctime: {}, exif_time: {}".format(self.name, self.model, self.width, self.height, self.ctime, self.exif_time)
+        return "{}, model: {}, width: {}, height: {}, ctime: {}, exif_time: {}, size: {}".format(self.name, self.model, self.width, self.height, self.ctime, self.exif_time, self.size)
  
 class Database:
     def __init__(self):
