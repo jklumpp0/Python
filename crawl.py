@@ -4,6 +4,7 @@ import sys
 from PIL import Image
 from db import DBImage, Database
 import datetime
+import Cr2ImagePlugin
 
 NO_MODEL = "NO_CAMERA"
 def get_camera_model(img):
